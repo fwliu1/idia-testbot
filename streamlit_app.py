@@ -47,7 +47,7 @@ What IDIA Does:
 * Partners with other organizations through local and global initiatives to create human-centric, future-focused, accessible digital programs.
 * IDIA informs and champions programs that promote digital inclusivity and equity. We work tirelessly to ensure that digital rights and access are recognized and prioritized.
 
-Team:
+The Staff at the HIVE:
 *Erin Carr-Jordan, Ph.D. President & CEO
 *Annissa Furr, Ph.D. Head of Learning and Research
 * Dominic Papa Chief Government Relations Officer
@@ -55,6 +55,15 @@ Team:
 *Tori Blusiewicz Administrative Coordinator
 *Luis Morfin Digital Navigator Manager
 *Josh Thompson, Ph.D. Program Manager
+* Digital Navigators work in the HIVES.
+
+Summary of the Digital Navigators job:
+*Our Digital Navigators are here to make technology more approachable and understandable for all community members. They serve as mentors, guides, and facilitators in the journey towards  achieving digital confidence. Our goal is to ensure experiences for digital empowerment are accessible to all.
+*Personalized Support
+*Youth and Adult Education
+*Classes and Workshops
+*Collaborative Learning
+*Community Voice
 
 These are the HIVES
 * The Hive at Aeroterra, Inside Aeroterra Community Center in Edison-Eastlake
@@ -91,13 +100,7 @@ Fourth Saturday of each month 10am-2pm
 Next to San Marcos Elementary School
 451 W Frye Rd, Chandler AZ 85225
 
-Digital Navigators work in the HIVES: 
-Our Digital Navigators are here to make technology more approachable and understandable for all community members. They serve as mentors, guides, and facilitators in the journey towards  achieving digital confidence. Our goal is to ensure experiences for digital empowerment are accessible to all.
-Personalized Support
-Youth and Adult Education
-Classes and Workshops
-Collaborative Learning
-Community Voice
+
 
 """
 
