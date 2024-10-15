@@ -143,7 +143,7 @@ if api_key:
             st.markdown(message["content"])
 
     # User input
-    if prompt := st.chat_input("How can I help you learn more about Pinnacle Prevention?"):
+    if prompt := st.chat_input("How can I help you learn more about IDIA?"):
         if st.session_state.user_type:
             # Add user message to chat history
             st.session_state.messages.append({"role": "user", "content": prompt})
