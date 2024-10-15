@@ -56,10 +56,10 @@ Team:
 *Luis Morfin Digital Navigator Manager
 *Josh Thompson, Ph.D. Program Manager
 
-HIVE Locations:
+These are the HIVES
 * The Hive at Aeroterra, Inside Aeroterra Community Center in Edison-Eastlake
-1725 E McKinley Street, Phoenix, Arizona 85006
-HOURS OF OPERATION
+-1725 E McKinley Street, Phoenix, Arizona 85006
+HOURS OF OPERATION for the HIVE at Aeroterra
 Mondays + Wednesday + Thursday 12pm-6pm
 Tuesday + Friday 10am-4pm
 Second Saturday of each month 10am-2pm
@@ -67,7 +67,7 @@ Second Saturday of each month 10am-2pm
 * The Hive at CTEC
 Inside Emmett McLoughlin Community Training and Education Center
 1150 S. 7th Avenue, Phoenix, Arizona 85007
-HOURS OF OPERATION
+HOURS OF OPERATION for the HIVE at CTEC
 Mondays + Wednesday + Thursday 12pm-6pm
 Tuesday + Friday 10am-4pm
 First Saturday of each month 10am-2pm
@@ -75,14 +75,14 @@ First Saturday of each month 10am-2pm
 * The Hive at Guadalupe South Mountain
 Inside South Mountain Community College’s Guadalupe Center
 9233 S Avenida del Yaqui, Guadalupe, Arizona 85283 
-HOURS OF OPERATION
+HOURS OF OPERATION for the HIVE at Guadalupe
 Mondays + Wednesday + Thursday 12pm-6pm
 Tuesday + Friday 10am-4pm
 Third Saturday of each month 10am-2pm
 
 * The Hive at EnVision Center
 1310 E Apache Blvd, Tempe, Arizona 85281
-HOURS OF OPERATION
+HOURS OF OPERATION for the HIVE at EnVision Center
 Mondays + Wednesday + Thursday 12pm-6pm
 Tuesday + Friday 10am-4pm
 Fourth Saturday of each month 10am-2pm
@@ -91,7 +91,7 @@ Fourth Saturday of each month 10am-2pm
 Next to San Marcos Elementary School
 451 W Frye Rd, Chandler AZ 85225
 
-In the HIVES are Digital Navigators: 
+Digital Navigators work in the HIVES: 
 Our Digital Navigators are here to make technology more approachable and understandable for all community members. They serve as mentors, guides, and facilitators in the journey towards  achieving digital confidence. Our goal is to ensure experiences for digital empowerment are accessible to all.
 Personalized Support
 Youth and Adult Education
