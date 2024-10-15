@@ -1,56 +1,174 @@
 import streamlit as st
-from openai import OpenAI
+import google.generativeai as genai
 
-# Show title and description.
-st.title("💬 Chatbot")
-st.write(
-    "This is a simple chatbot that uses OpenAI's GPT-3.5 model to generate responses. "
-    "To use this app, you need to provide an OpenAI API key, which you can get [here](https://platform.openai.com/account/api-keys). "
-    "You can also learn how to build this app step by step by [following our tutorial](https://docs.streamlit.io/develop/tutorials/llms/build-conversational-apps)."
-)
+# Initialize session state
+if 'user_type' not in st.session_state:
+    st.session_state.user_type = None
+if 'context' not in st.session_state:
+    st.session_state.context = ""
 
-# Ask user for their OpenAI API key via `st.text_input`.
-# Alternatively, you can store the API key in `./.streamlit/secrets.toml` and access it
-# via `st.secrets`, see https://docs.streamlit.io/develop/concepts/connections/secrets-management
-openai_api_key = st.text_input("OpenAI API Key", type="password")
-if not openai_api_key:
-    st.info("Please add your OpenAI API key to continue.", icon="🗝️")
-else:
+def initialize_gemini(api_key):
+    genai.configure(api_key=api_key)
+    return genai.GenerativeModel('gemini-pro')
 
-    # Create an OpenAI client.
-    client = OpenAI(api_key=openai_api_key)
+def get_gemini_response(model, question, user_type, context):
+    user_type_prompts = {
+        "Kid": "You are talking to a child. Use simple language and explanations suitable for children. Keep responses brief and engaging.",
+        "Adult": "You are conversing with an adult. Provide detailed and comprehensive responses.",
+        "Senior": "You are speaking with a senior citizen. Be respectful, patient, and use clear language. Consider potential health or technology-related concerns in your responses."
+    }
+    
+    full_prompt = f"""
+    {context}
 
-    # Create a session state variable to store the chat messages. This ensures that the
-    # messages persist across reruns.
+    You are an AI assistant for CTEC. Always be helpful, friendly, and informative. 
+    {user_type_prompts.get(user_type, '')}
+    
+    If asked about information not provided in the context, politely state that you don't have that specific information 
+    and offer to help with general inquiries or direct them to contact the center's staff for the most up-to-date information.
+
+    Human: {question}
+    AI Assistant:
+    """
+    response = model.generate_content(full_prompt)
+    return response.text
+
+# Streamlit app
+st.title("IDIA Chatbot Assistant")
+
+# Sidebar for context input (for demo purposes, normally this would be pre-set)
+#st.sidebar.title("Set Envision Center Information")
+context_input = """
+IDIA (formerly Digital Equity Institute) is a nonprofit dedicated to improving the quality of life for people around the globe through digital inclusion.
+Our mission is bold but simple: to eliminate the digital divide – the gap between those who have affordable access, skills, and support to effectively engage online and those who do not. We are co-creating communities in which every individual, regardless of their background, can thrive in the digital age. 
+
+What IDIA Does:
+* IDIA co-creates programs, workshops and tools, like our Community Technology Hives, designed to enhance digital skills for all ages and life contexts.
+* Partners with other organizations through local and global initiatives to create human-centric, future-focused, accessible digital programs.
+* IDIA informs and champions programs that promote digital inclusivity and equity. We work tirelessly to ensure that digital rights and access are recognized and prioritized.
+
+Team:
+*Erin Carr-Jordan, Ph.D. President & CEO
+*Annissa Furr, Ph.D. Head of Learning and Research
+* Dominic Papa Chief Government Relations Officer
+*Stephanie Pierotti Head of Community Activation
+*Tori Blusiewicz Administrative Coordinator
+*Luis Morfin Digital Navigator Manager
+*Josh Thompson, Ph.D. Program Manager
+
+HIVE Locations:
+* The Hive at Aeroterra, Inside Aeroterra Community Center in Edison-Eastlake
+1725 E McKinley Street, Phoenix, Arizona 85006
+HOURS OF OPERATION
+Mondays + Wednesday + Thursday 12pm-6pm
+Tuesday + Friday 10am-4pm
+Second Saturday of each month 10am-2pm
+
+* The Hive at CTEC
+Inside Emmett McLoughlin Community Training and Education Center
+1150 S. 7th Avenue, Phoenix, Arizona 85007
+HOURS OF OPERATION
+Mondays + Wednesday + Thursday 12pm-6pm
+Tuesday + Friday 10am-4pm
+First Saturday of each month 10am-2pm
+
+* The Hive at Guadalupe South Mountain
+Inside South Mountain Community College’s Guadalupe Center
+9233 S Avenida del Yaqui, Guadalupe, Arizona 85283 
+HOURS OF OPERATION
+Mondays + Wednesday + Thursday 12pm-6pm
+Tuesday + Friday 10am-4pm
+Third Saturday of each month 10am-2pm
+
+* The Hive at EnVision Center
+1310 E Apache Blvd, Tempe, Arizona 85281
+HOURS OF OPERATION
+Mondays + Wednesday + Thursday 12pm-6pm
+Tuesday + Friday 10am-4pm
+Fourth Saturday of each month 10am-2pm
+
+* The Hive at Chandler San Marcos
+Next to San Marcos Elementary School
+451 W Frye Rd, Chandler AZ 85225
+
+In the HIVES are Digital Navigators: 
+Our Digital Navigators are here to make technology more approachable and understandable for all community members. They serve as mentors, guides, and facilitators in the journey towards  achieving digital confidence. Our goal is to ensure experiences for digital empowerment are accessible to all.
+Personalized Support
+Youth and Adult Education
+Classes and Workshops
+Collaborative Learning
+Community Voice
+
+"""
+
+#if st.sidebar.button("Update Center Information"):
+st.session_state.context = context_input
+#    st.sidebar.success("Envision Center information updated!")
+
+# API key input
+api_key = st.secrets["APIKEY"]
+#st.text_input("Enter your Gemini API Key:", type="password")
+
+if api_key:
+    # Initialize the model
+    model = initialize_gemini(api_key)
+
+    # User type selection
+    st.subheader("Select Your User Type:")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        if st.button("Kid"):
+            st.session_state.user_type = "Kid"
+    with col2:
+        if st.button("Adult"):
+            st.session_state.user_type = "Adult"
+    with col3:
+        if st.button("Senior"):
+            st.session_state.user_type = "Senior"
+
+    # Display selected user type
+    if st.session_state.user_type:
+        st.write(f"Selected User Type: {st.session_state.user_type}")
+
+    # Chat interface
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
-    # Display the existing chat messages via `st.chat_message`.
+    # Display chat messages
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    # Create a chat input field to allow the user to enter a message. This will display
-    # automatically at the bottom of the page.
-    if prompt := st.chat_input("What is up?"):
+    # User input
+    if prompt := st.chat_input("How can I help you learn more about Pinnacle Prevention?"):
+        if st.session_state.user_type:
+            # Add user message to chat history
+            st.session_state.messages.append({"role": "user", "content": prompt})
+            # Display user message
+            with st.chat_message("user"):
+                st.markdown(prompt)
 
-        # Store and display the current prompt.
-        st.session_state.messages.append({"role": "user", "content": prompt})
-        with st.chat_message("user"):
-            st.markdown(prompt)
+            # Get and display Gemini response
+            response = get_gemini_response(model, prompt, st.session_state.user_type, st.session_state.context)
+            # Add assistant response to chat history
+            st.session_state.messages.append({"role": "assistant", "content": response})
+            # Display assistant response
+            with st.chat_message("assistant"):
+                st.markdown(response)
+        else:
+            st.warning("Please select a user type before asking questions.")
 
-        # Generate a response using the OpenAI API.
-        stream = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        )
+else:
+    st.warning("Please enter your Gemini API Key to start.")
 
-        # Stream the response to the chat using `st.write_stream`, then store it in 
-        # session state.
-        with st.chat_message("assistant"):
-            response = st.write_stream(stream)
-        st.session_state.messages.append({"role": "assistant", "content": response})
+# Instructions
+st.sidebar.title("How to Use")
+st.sidebar.markdown("""
+1. Select your user type (Kid, Adult, or Senior).
+2. Ask questions about IDIA in the chat interface: About hours, programs, etc!
+3. The AI will provide information based on your user type and details.
+
+Quick Links:
+* Website: https://theidia.org/
+
+""")
